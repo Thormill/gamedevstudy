@@ -47,9 +47,25 @@ namespace TicTacToe {
       busy = false;
     }
 
-    public void Draw(string val = FIGURE_DEFAULT) {
-      value = val;
+    public void Mark(string figure) {
+      value = figure;
       busy = true;
+    }
+
+    public void Draw() {
+      switch(value) {
+        case FIGURE_CROSS:
+          Console.BackgroundColor = ConsoleColor.Blue;
+          Console.ForegroundColor = ConsoleColor.Red;
+          break;
+        case FIGURE_CIRCLE:
+        Console.BackgroundColor = ConsoleColor.Red;
+          Console.ForegroundColor = ConsoleColor.Blue;
+          break;
+      }
+
+      Console.Write(@"|{0}|", value);
+      Console.ResetColor();
     }
   }
 
@@ -60,7 +76,8 @@ namespace TicTacToe {
       grid = new Field[9];
 
       for(int i = 0; i < 9; i++) {
-        grid[i] = new Field((i + 1).ToString());
+        string shown_number = (i + 1).ToString();
+        grid[i] = new Field(shown_number);
       }
     }
 
@@ -68,7 +85,8 @@ namespace TicTacToe {
       Console.Clear();
 
       for(int i = 0; i < 9; i++) {
-        Console.Write(@"|{0}|", grid[i].value);
+        grid[i].Draw();
+        // Console.Write(@"|{0}|", grid[i].value);
 
         if ((i + 1) % 3 == 0 ) {
           Console.WriteLine();
@@ -77,7 +95,7 @@ namespace TicTacToe {
     }
 
     public void Turn(int number, string figure) {
-      grid[number].Draw(figure);
+      grid[number].Mark(figure);
     }
 
     public int[] AvailableFields() {
@@ -98,6 +116,9 @@ namespace TicTacToe {
   }
 
   class Game {
+    // static bool CheckWinCondition(Grid grid) {
+    //   if (grid[0] == grid[1] && grid[1] == grid[2]) return true;
+    // }
     static void Main(string[] args) {
       Random rnd = new Random();
       bool gameOngoing = true;

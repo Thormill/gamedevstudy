@@ -43,6 +43,7 @@ namespace TicTacToe {
         }
       }
 
+      // TODO: rewrite with loops? TBD
       // horizontal lines
       if (marked.Contains(0) && marked.Contains(1) && marked.Contains(2)) win = true;
       if (marked.Contains(3) && marked.Contains(4) && marked.Contains(5)) win = true;
@@ -85,10 +86,12 @@ namespace TicTacToe {
         case FIGURE_CROSS:
           Console.BackgroundColor = ConsoleColor.Blue;
           Console.ForegroundColor = ConsoleColor.Red;
+
           break;
         case FIGURE_CIRCLE:
-        Console.BackgroundColor = ConsoleColor.Red;
+          Console.BackgroundColor = ConsoleColor.Red;
           Console.ForegroundColor = ConsoleColor.Blue;
+
           break;
       }
 
@@ -144,9 +147,6 @@ namespace TicTacToe {
   }
 
   class Game {
-    // static bool CheckWinCondition(Grid grid) {
-    //   if (grid[0] == grid[1] && grid[1] == grid[2]) return true;
-    // }
     static void Main(string[] args) {
       Random rnd = new Random();
       bool gameOngoing = true;
@@ -176,6 +176,7 @@ namespace TicTacToe {
         int[] free_fields = grid.AvailableFields();
 
         if (free_fields.Length == 0) {
+          Console.WriteLine("It's a draw!");
           gameOngoing = false;
 
           break;
@@ -246,8 +247,6 @@ namespace TicTacToe {
         }
       }
 
-      grid.Draw();
-      Console.WriteLine("GameOver");
       Console.ReadKey();
     }
   }

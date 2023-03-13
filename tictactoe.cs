@@ -4,11 +4,28 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace TicTacToe {
-  // class of the field
-  // class of the field square
+  internal class History {
+    // string[] turns;
+    List<string> turns;
+
+    public History() {
+      turns = new List<string>();
+    }
+
+    public void Remember(string figure, int field){
+      string record = $"Turn #{turns.Count}: {figure} at grid #{field + 1}";
+      turns.Add(record);
+    }
+
+    public void Draw() {
+      foreach (var turn in turns) {
+        Console.WriteLine(turn);
+      }
+    }
+  }
 
   internal class Player {
-    private string figure;
+    public string figure;
     public bool current_turn;
 
     public Player(string fig) {
@@ -152,6 +169,7 @@ namespace TicTacToe {
       bool gameOngoing = true;
 
       Grid grid = new Grid();
+      History history = new History();
 
       Player player;
       Player bot;
@@ -172,6 +190,7 @@ namespace TicTacToe {
 
       while (gameOngoing) {
         grid.Draw();
+        history.Draw();
 
         int[] free_fields = grid.AvailableFields();
 
@@ -199,6 +218,7 @@ namespace TicTacToe {
             }
 
             grid.Turn(field - 1, player.Draw());
+            history.Remember(player.figure, field - 1);
           } catch(FormatException) {
             Console.WriteLine("Wrong input! Press any key to retry.");
             Console.ReadKey();
@@ -214,8 +234,8 @@ namespace TicTacToe {
           // Check win condition
           if (player.CheckWin(grid)) {
             grid.Draw();
+            history.Draw();
             Console.WriteLine("You win!");
-            Console.ReadKey();
             gameOngoing = false;
 
             break;
@@ -231,11 +251,12 @@ namespace TicTacToe {
           // AI turn
           int bot_field = rnd.Next(0, free_fields.Length);
           grid.Turn(free_fields[bot_field], bot.Draw());
+          history.Remember(bot.figure, free_fields[bot_field]);
 
           if (bot.CheckWin(grid)) {
             grid.Draw();
+            history.Draw();
             Console.WriteLine("Bot wins!");
-            Console.ReadKey();
             gameOngoing = false;
 
             break;

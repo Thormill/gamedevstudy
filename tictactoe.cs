@@ -13,7 +13,7 @@ namespace TicTacToe {
     }
 
     public void Remember(string figure, int field){
-      string record = $"Turn #{turns.Count}: {figure} at grid #{field + 1}";
+      string record = $"Turn #{turns.Count}: {figure} at grid #{field}";
       turns.Add(record);
     }
 
@@ -119,9 +119,11 @@ namespace TicTacToe {
 
   internal class Grid {
     public Field[] grid;
+    private History history;
 
     public Grid() {
       grid = new Field[9];
+      history = new History();
 
       for(int i = 0; i < 9; i++) {
         string shown_number = (i + 1).ToString();
@@ -134,16 +136,18 @@ namespace TicTacToe {
 
       for(int i = 0; i < 9; i++) {
         grid[i].Draw();
-        // Console.Write(@"|{0}|", grid[i].value);
 
         if ((i + 1) % 3 == 0 ) {
           Console.WriteLine();
         }
       }
+
+      history.Draw();
     }
 
     public void Turn(int number, string figure) {
       grid[number].Mark(figure);
+      history.Remember(figure, number);
     }
 
     public int[] AvailableFields() {
@@ -169,7 +173,6 @@ namespace TicTacToe {
       bool gameOngoing = true;
 
       Grid grid = new Grid();
-      History history = new History();
 
       Player player;
       Player bot;
@@ -190,7 +193,6 @@ namespace TicTacToe {
 
       while (gameOngoing) {
         grid.Draw();
-        history.Draw();
 
         int[] free_fields = grid.AvailableFields();
 
@@ -208,17 +210,10 @@ namespace TicTacToe {
           // User Input check
           try {
             int field = int.Parse(Console.ReadLine());
-
             // Check if field is already marked
-            if (grid.CheckField(field - 1)) {
-              Console.WriteLine("Wrong field! Press any key to retry.");
-              Console.ReadKey();
-
-              continue;
-            }
+            if (grid.CheckField(field - 1)) throw new IndexOutOfRangeException();
 
             grid.Turn(field - 1, player.Draw());
-            history.Remember(player.figure, field - 1);
           } catch(FormatException) {
             Console.WriteLine("Wrong input! Press any key to retry.");
             Console.ReadKey();
@@ -234,7 +229,6 @@ namespace TicTacToe {
           // Check win condition
           if (player.CheckWin(grid)) {
             grid.Draw();
-            history.Draw();
             Console.WriteLine("You win!");
             gameOngoing = false;
 
@@ -251,11 +245,9 @@ namespace TicTacToe {
           // AI turn
           int bot_field = rnd.Next(0, free_fields.Length);
           grid.Turn(free_fields[bot_field], bot.Draw());
-          history.Remember(bot.figure, free_fields[bot_field]);
 
           if (bot.CheckWin(grid)) {
             grid.Draw();
-            history.Draw();
             Console.WriteLine("Bot wins!");
             gameOngoing = false;
 

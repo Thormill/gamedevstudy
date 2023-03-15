@@ -22,7 +22,7 @@ namespace Snake
     List<Segment> segments;
 
     public Player(){
-      size = 1;
+      size = 0;
 
       segments = new List<Segment>();
       segments.Add(new Segment(20, 10, DIR_UP));
@@ -84,7 +84,7 @@ namespace Snake
     public void Consume(Food food) {
       size++;
       Segment head = segments.ElementAt(0);
-      segments.Add(new Segment(head.x, head.y, head.dir, size - 1));
+      segments.Add(new Segment(head.x, head.y, head.dir, size, food.color));
       food.Redraw(this);
     }
 

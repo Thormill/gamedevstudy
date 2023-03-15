@@ -6,6 +6,7 @@ namespace Snake
   internal class Food {
 
     public const string BLOCK = "██";
+    public ConsoleColor color;
 
     public int x;
     public int y;
@@ -17,11 +18,24 @@ namespace Snake
       if (x % 2 != 0) x += 1;
 
       y = rnd.Next(0, 40);
+
+      ChangeColor();
+    }
+
+    private void ChangeColor() {
+      var consoleColors = Enum.GetValues(typeof(ConsoleColor));
+      Random rnd = new Random();
+
+      do {
+        color = (ConsoleColor)consoleColors.GetValue(rnd.Next(consoleColors.Length));
+      } while(color == ConsoleColor.Black);
     }
 
     public void Draw() {
       Console.SetCursorPosition(x, y);
+      Console.ForegroundColor = color;
       Console.Write(BLOCK);
+      Console.ResetColor();
     }
 
     public void Redraw(Player player) {
@@ -34,6 +48,7 @@ namespace Snake
       } while( player.Collision(this) == true );
 
       Erase();
+      ChangeColor();
       Draw();
     }
     public void Erase() {

@@ -4,41 +4,32 @@ using System.IO;
 namespace Snake
 {
   internal class Segment {
-    public const int DIR_UP = 0;
-    public const int DIR_LEFT = 1;
-    public const int DIR_RIGHT = 2;
-    public const int DIR_DOWN = 3;
-    public const int SPEED_X = 2;
-    public const int SPEED_Y = 1;
+    const string BLOCK = "██";
 
+    public int x, y, dir, move_delay;
+    public ConsoleColor color;
 
-    public const string BLOCK = "██";
-
-    public int x; // TODO: check for private
-    public int y; // TODO: check for private
-    public int dir;
-    public int move_delay;
-
-    public Segment(int x = 20, int y = 10, int dir = DIR_UP, int delay = 0){
+    public Segment(int x = 20, int y = 10, int dir = Player.DIR_UP, int delay = 0, ConsoleColor color = ConsoleColor.Gray){
       this.x = x;
       this.y = y;
       this.dir = dir;
       this.move_delay = delay;
+      this.color = color;
     }
 
     public void Rotate(int dir) {
       switch(dir) {
-        case DIR_UP:
-          this.dir = DIR_UP;
+        case Player.DIR_UP:
+          this.dir = Player.DIR_UP;
           break;
-        case DIR_LEFT:
-          this.dir = DIR_LEFT;
+        case Player.DIR_LEFT:
+          this.dir = Player.DIR_LEFT;
           break;
-        case DIR_DOWN:
-          this.dir = DIR_DOWN;
+        case Player.DIR_DOWN:
+          this.dir = Player.DIR_DOWN;
           break;
-        case DIR_RIGHT:
-          this.dir = DIR_RIGHT;
+        case Player.DIR_RIGHT:
+          this.dir = Player.DIR_RIGHT;
           break;
       }
     }
@@ -51,30 +42,30 @@ namespace Snake
       }
 
       switch(dir) {
-        case DIR_UP:
-          if (y - SPEED_Y >= 0) {
-            y -= SPEED_Y;
+        case Player.DIR_UP:
+          if (y - Player.SPEED_Y >= 0) {
+            y -= Player.SPEED_Y;
           } else {
             y = Game.HEIGHT - 1;
           }
           break;
-        case DIR_LEFT:
-          if (x - SPEED_X >= 0) {
-            x -= SPEED_X;
+        case Player.DIR_LEFT:
+          if (x - Player.SPEED_X >= 0) {
+            x -= Player.SPEED_X;
           } else {
             x = Game.WIDTH - 2;
           }
           break;
-        case DIR_RIGHT:
-          if (x + SPEED_X + 1 < Game.WIDTH) {
-            x += SPEED_X;
+        case Player.DIR_RIGHT:
+          if (x + Player.SPEED_X + 1 < Game.WIDTH) {
+            x += Player.SPEED_X;
           } else {
             x = 0;
           }
           break;
-        case DIR_DOWN:
-          if (y + SPEED_Y < Game.HEIGHT) {
-            y += SPEED_Y;
+        case Player.DIR_DOWN:
+          if (y + Player.SPEED_Y < Game.HEIGHT) {
+            y += Player.SPEED_Y;
           } else {
             y = 0;
           }
@@ -84,7 +75,9 @@ namespace Snake
 
     public void Draw() {
       Console.SetCursorPosition(x, y);
+      Console.ForegroundColor = color;
       Console.Write(BLOCK);
+      Console.ResetColor();
     }
 
     public void Erase() {

@@ -24,8 +24,12 @@ namespace Snake
     static void Main(){
       bool game_ongoing = true;
       Player player = new Player();
+      Food food = new Food();
 
       PrepareScreen();
+
+      // first food is spawned before player. TODO: check for collision with player
+      food.Draw();
 
       while(game_ongoing){
         player.Erase();

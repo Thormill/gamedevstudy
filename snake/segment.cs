@@ -9,7 +9,7 @@ namespace Snake
     public int x, y, dir, move_delay;
     public ConsoleColor color;
 
-    public Segment(int x = 20, int y = 10, int dir = Player.DIR_UP, int delay = 0, ConsoleColor color = ConsoleColor.Gray){
+    public Segment(int x = 20, int y = 10, int dir = Player.DIR_UP, int delay = 0, ConsoleColor color = ConsoleColor.Gray) {
       this.x = x;
       this.y = y;
       this.dir = dir;

@@ -13,14 +13,16 @@ namespace Snake
 
     public const string BLOCK = "██";
 
-    int head_x;
-    int head_y;
+    public int head_x;
+    public int head_y;
     int dir;
+    int size;
 
     public Player(){
       head_x = 20;
       head_y = 10;
       dir = 0;
+      size = 1;
     }
 
     public void Rotate(ConsoleKeyInfo key) {
@@ -65,6 +67,11 @@ namespace Snake
     public void Erase() {
       Console.SetCursorPosition(head_x, head_y);
       Console.Write("  ");
+    }
+
+    public void Consume(Food food) {
+      size++;
+      food.Redraw();
     }
   }
 }

@@ -21,6 +21,7 @@ namespace Snake
 
       return result;
     }
+
     static void Main(){
       bool game_ongoing = true;
       Player player = new Player();
@@ -43,6 +44,8 @@ namespace Snake
 
         player.Move();
         player.Draw();
+
+        if (player.head_x == food.x && player.head_y == food.y) player.Consume(food);
 
         System.Threading.Thread.Sleep(50);
       }

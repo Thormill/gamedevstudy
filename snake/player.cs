@@ -28,15 +28,23 @@ namespace Snake
     public void Rotate(ConsoleKeyInfo key) {
       switch(key.Key) {
         case ConsoleKey.W:
+          if (dir == DIR_DOWN) break;
+
           dir = DIR_UP;
           break;
         case ConsoleKey.A:
+          if (dir == DIR_RIGHT) break;
+
           dir = DIR_LEFT;
           break;
         case ConsoleKey.S:
+          if (dir == DIR_UP) break;
+
           dir = DIR_DOWN;
           break;
         case ConsoleKey.D:
+          if (dir == DIR_LEFT) break;
+
           dir = DIR_RIGHT;
           break;
       }

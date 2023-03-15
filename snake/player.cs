@@ -85,7 +85,7 @@ namespace Snake
       size++;
       Segment head = segments.ElementAt(0);
       segments.Add(new Segment(head.x, head.y, head.dir, size - 1));
-      food.Redraw();
+      food.Redraw(this);
     }
 
     public Segment Head() {
@@ -99,6 +99,17 @@ namespace Snake
       for(int i = 1; i < segments.Count; i++) {
         Segment segment = segments.ElementAt(i);
         if(segment.x == head.x && segment.y == head.y && segment.move_delay == 0) result = true;
+      }
+
+      return result;
+    }
+
+    public bool Collision(Food food) {
+      bool result = false;
+
+      for(int i = 0; i < segments.Count; i++) {
+        Segment segment = segments.ElementAt(i);
+        if(segment.x == food.x && segment.y == food.y) result = true;
       }
 
       return result;

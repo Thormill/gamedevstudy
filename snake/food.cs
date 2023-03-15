@@ -14,7 +14,7 @@ namespace Snake
       Random rnd = new Random();
 
       x = rnd.Next(0, 120);
-      if (x % 2 != 0) x+= 1;
+      if (x % 2 != 0) x += 1;
 
       y = rnd.Next(0, 40);
     }
@@ -24,13 +24,14 @@ namespace Snake
       Console.Write(BLOCK);
     }
 
-    public void Redraw() {
+    public void Redraw(Player player) {
       Random rnd = new Random();
 
-      x = rnd.Next(0, 120);
-      if (x % 2 != 0) x+= 1;
-
-      y = rnd.Next(0, 40);
+      do {
+        x = rnd.Next(0, 120);
+        if (x % 2 != 0) x += 1;
+        y = rnd.Next(0, 40);
+      } while( player.Collision(this) == true );
 
       Erase();
       Draw();

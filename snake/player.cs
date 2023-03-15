@@ -8,6 +8,10 @@ namespace Snake
     public const int DIR_LEFT = 1;
     public const int DIR_RIGHT = 2;
     public const int DIR_DOWN = 3;
+    public const int SPEED_X = 2;
+    public const int SPEED_Y = 1;
+
+    public const string BLOCK = "██";
 
     int head_x;
     int head_y;
@@ -20,7 +24,7 @@ namespace Snake
     }
 
     public void Rotate(ConsoleKeyInfo key) {
-      switch(key.key) {
+      switch(key.Key) {
         case ConsoleKey.W:
           dir = DIR_UP;
           break;
@@ -34,6 +38,33 @@ namespace Snake
           dir = DIR_RIGHT;
           break;
       }
+    }
+
+    public void Move() {
+      switch(dir) {
+        case DIR_UP:
+          head_y -= SPEED_Y;
+          break;
+        case DIR_LEFT:
+          head_x -= SPEED_X;
+          break;
+        case DIR_RIGHT:
+          head_x += SPEED_X;
+          break;
+        case DIR_DOWN:
+          head_y += SPEED_Y;
+          break;
+      }
+    }
+
+    public void Draw() {
+      Console.SetCursorPosition(head_x, head_y);
+      Console.Write(BLOCK);
+    }
+
+    public void Erase() {
+      Console.SetCursorPosition(head_x, head_y);
+      Console.Write("  ");
     }
   }
 }

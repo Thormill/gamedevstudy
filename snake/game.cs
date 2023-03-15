@@ -16,12 +16,17 @@ namespace Snake
       PrepareScreen();
 
       while(game_ongoing){
+        player.Erase();
+
         if (Console.KeyAvailable == true) {
           ConsoleKeyInfo key;
           key = Console.ReadKey();
 
           player.Rotate(key);
         }
+
+        player.Move();
+        player.Draw();
 
         System.Threading.Thread.Sleep(50);
       }

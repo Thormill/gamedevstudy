@@ -4,9 +4,11 @@ using System.IO;
 namespace Snake
 {
   internal class Game {
+    public const int HEIGHT = 40;
+    public const int WIDTH = 120;
     private static void PrepareScreen(){
-      Console.SetWindowSize(120, 40);
-      Console.SetBufferSize(120, 40);
+      Console.SetWindowSize(WIDTH, HEIGHT);
+      Console.SetBufferSize(WIDTH, HEIGHT);
       Console.CursorVisible = false;
     }
 

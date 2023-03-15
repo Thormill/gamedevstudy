@@ -45,16 +45,32 @@ namespace Snake
     public void Move() {
       switch(dir) {
         case DIR_UP:
-          head_y -= SPEED_Y;
+          if (head_y - SPEED_Y > 0) {
+            head_y -= SPEED_Y;
+          } else {
+            head_y = Game.HEIGHT - 1;
+          }
           break;
         case DIR_LEFT:
-          head_x -= SPEED_X;
+          if (head_x - SPEED_X >= 1) {
+            head_x -= SPEED_X;
+          } else {
+            head_x = Game.WIDTH - 2;
+          }
           break;
         case DIR_RIGHT:
-          head_x += SPEED_X;
+          if (head_x + SPEED_X + 1 < Game.WIDTH) {
+            head_x += SPEED_X;
+          } else {
+            head_x = 0;
+          }
           break;
         case DIR_DOWN:
-          head_y += SPEED_Y;
+          if (head_y + SPEED_Y < Game.HEIGHT) {
+            head_y += SPEED_Y;
+          } else {
+            head_y = 0;
+          }
           break;
       }
     }

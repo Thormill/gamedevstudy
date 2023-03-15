@@ -47,8 +47,15 @@ namespace Snake
 
         if (player.Head().x == food.x && player.Head().y == food.y) player.Consume(food);
 
+        if (player.Collision() == true) game_ongoing = false;
+
         System.Threading.Thread.Sleep(50);
       }
+
+      Console.Clear();
+      Console.SetCursorPosition(0, HEIGHT - 1);
+      Console.WriteLine(@"Game over! Your score is {0}", player.size);
+      Console.ReadLine();
     }
   }
 }

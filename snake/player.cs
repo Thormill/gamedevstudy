@@ -16,10 +16,8 @@ namespace Snake
 
     public const string BLOCK = "██";
 
-    // public int head_x;
-    // public int head_y;
     int dir;
-    int size;
+    public int size;
 
     List<Segment> segments;
 
@@ -62,12 +60,6 @@ namespace Snake
 
         segment.Rotate(previous_segment.dir);
       }
-      // for(int i = 0; i < segments.Count - 1; i++){
-      //   Segment segment = segments.ElementAt(i);
-      //   Segment next_segment = segments.ElementAt(i + 1);
-
-      //   next_segment.Rotate(segment.dir);
-      // }
 
       Segment head = segments.ElementAt(0);
       head.Rotate(dir);
@@ -98,6 +90,18 @@ namespace Snake
 
     public Segment Head() {
       return segments.ElementAt(0);
+    }
+
+    public bool Collision() {
+      Segment head = Head();
+      bool result = false;
+
+      for(int i = 1; i < segments.Count; i++) {
+        Segment segment = segments.ElementAt(i);
+        if(segment.x == head.x && segment.y == head.y && segment.move_delay == 0) result = true;
+      }
+
+      return result;
     }
   }
 }

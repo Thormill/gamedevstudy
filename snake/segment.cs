@@ -17,7 +17,7 @@ namespace Snake
     public int x; // TODO: check for private
     public int y; // TODO: check for private
     public int dir;
-    int move_delay;
+    public int move_delay;
 
     public Segment(int x = 20, int y = 10, int dir = DIR_UP, int delay = 0){
       this.x = x;

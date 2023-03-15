@@ -31,10 +31,8 @@ namespace Snake
 
       PrepareScreen();
 
-      // first food is spawned before player. TODO: check for collision with player
-      food.Draw();
-
       while(game_ongoing){
+        food.Draw();
         player.Erase();
 
         if (Console.KeyAvailable == true) {

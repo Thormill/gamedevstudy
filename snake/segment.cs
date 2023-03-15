@@ -52,7 +52,7 @@ namespace Snake
 
       switch(dir) {
         case DIR_UP:
-          if (y - SPEED_Y > 0) {
+          if (y - SPEED_Y >= 0) {
             y -= SPEED_Y;
           } else {
             y = Game.HEIGHT - 1;

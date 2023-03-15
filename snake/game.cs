@@ -4,28 +4,31 @@ using System.IO;
 namespace Snake
 {
   internal class Game {
+    public const int SCREEN_DELAY = 50;
     public const int HEIGHT = 40;
     public const int WIDTH = 120;
     private static void PrepareScreen() {
-      Console.SetWindowSize( WIDTH, HEIGHT + 3 );
-      Console.SetBufferSize( WIDTH, HEIGHT + 3 );
+      Console.SetWindowSize( WIDTH, HEIGHT + 2 );
+      Console.SetBufferSize( WIDTH, HEIGHT + 2 );
       Console.CursorVisible = false;
     }
 
     private static void DrawBottomBorder() {
       for(int i = 0; i < WIDTH; i++) {
-        Console.SetCursorPosition( i, HEIGHT + 1 );
+        Console.SetCursorPosition( i, HEIGHT );
         Console.Write("V");
       }
     }
 
     private static void ShowScore(Player player) {
-      Console.SetCursorPosition( 0, HEIGHT + 2 );
+      Console.SetCursorPosition( 0, HEIGHT + 1 );
       Console.Write(@"Current score: ");
 
       Console.ForegroundColor = ConsoleColor.Red;
       Console.Write(player.size);
       Console.ResetColor();
+
+      Console.Write(@"; Current speed: {0}", (player.size >= SCREEN_DELAY ? SCREEN_DELAY : player.size) / 10);
     }
 
     private static ConsoleKeyInfo ReadUserInput() {
@@ -48,13 +51,15 @@ namespace Snake
         Player player = new Player();
         Food food = new Food();
 
+        int speed = 0;
+
         PrepareScreen();
         DrawBottomBorder();
 
         while(true) {
           ShowScore(player);
+
           food.Draw();
-          player.Erase();
 
           if (Console.KeyAvailable == true) {
             key = ReadUserInput();
@@ -62,6 +67,11 @@ namespace Snake
             player.Rotate(key);
           }
 
+          if ( player.size <= SCREEN_DELAY && player.size % 10 == 0 ) {
+            speed = player.size ;
+          }
+
+          player.Erase();
           player.Move();
           player.Draw();
 
@@ -69,11 +79,11 @@ namespace Snake
 
           if ( player.Collision() == true ) break;
 
-          System.Threading.Thread.Sleep( 50 );
+          System.Threading.Thread.Sleep( SCREEN_DELAY - speed );
         }
 
         // Console.Clear();
-        Console.SetCursorPosition( 0, HEIGHT + 2 );
+        Console.SetCursorPosition( 0, HEIGHT + 1 );
         Console.WriteLine(@"Game over! Your score is {0}. Press enter to enter menu.", player.size);
         Console.ReadLine();
         Console.WriteLine("Press Y to continue");

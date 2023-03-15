@@ -42,9 +42,10 @@ namespace Snake
       Random rnd = new Random();
 
       do {
-        x = rnd.Next(0, 120);
+        x = rnd.Next(0, Game.WIDTH);
         if (x % 2 != 0) x += 1;
-        y = rnd.Next(0, 40);
+
+        y = rnd.Next(0, Game.HEIGHT);
       } while( player.Collision(this) == true );
 
       Erase();

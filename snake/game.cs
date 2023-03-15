@@ -20,7 +20,7 @@ namespace Snake
       }
     }
 
-    private static void ShowScore(Player player) {
+    private static void ShowScore(Player player, History history) {
       Console.SetCursorPosition( 0, HEIGHT + 1 );
       Console.Write(@"Current score: ");
 
@@ -29,6 +29,7 @@ namespace Snake
       Console.ResetColor();
 
       Console.Write(@"; Current speed: {0}", (player.size >= SCREEN_DELAY ? SCREEN_DELAY : player.size) / 10);
+      Console.Write(@"       Record is {0}", history.record);
     }
 
     private static ConsoleKeyInfo ReadUserInput() {
@@ -45,6 +46,7 @@ namespace Snake
 
     static void Main(){
       bool game_ongoing = true;
+      History history = new History();
       ConsoleKeyInfo key;
 
       do {
@@ -57,7 +59,7 @@ namespace Snake
         DrawBottomBorder();
 
         while(true) {
-          ShowScore(player);
+          ShowScore(player, history);
 
           food.Draw();
 
@@ -82,9 +84,16 @@ namespace Snake
           System.Threading.Thread.Sleep( SCREEN_DELAY - speed );
         }
 
-        // Console.Clear();
         Console.SetCursorPosition( 0, HEIGHT + 1 );
         Console.WriteLine(@"Game over! Your score is {0}. Press enter to enter menu.", player.size);
+
+        if (history.record < player.size) {
+          Console.WriteLine(@"New Record! {0}! {1} above previous result!", player.size, player.size - history.record);
+        }
+
+        history.Remember(player.size);
+        history.Draw();
+
         Console.ReadLine();
         Console.WriteLine("Press Y to continue");
 

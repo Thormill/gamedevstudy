@@ -1,5 +1,8 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace Snake
 {
@@ -13,16 +16,18 @@ namespace Snake
 
     public const string BLOCK = "██";
 
-    public int head_x;
-    public int head_y;
+    // public int head_x;
+    // public int head_y;
     int dir;
     int size;
 
+    List<Segment> segments;
+
     public Player(){
-      head_x = 20;
-      head_y = 10;
-      dir = 0;
       size = 1;
+
+      segments = new List<Segment>();
+      segments.Add(new Segment(20, 10, DIR_UP));
     }
 
     public void Rotate(ConsoleKeyInfo key) {
@@ -51,51 +56,48 @@ namespace Snake
     }
 
     public void Move() {
-      switch(dir) {
-        case DIR_UP:
-          if (head_y - SPEED_Y > 0) {
-            head_y -= SPEED_Y;
-          } else {
-            head_y = Game.HEIGHT - 1;
-          }
-          break;
-        case DIR_LEFT:
-          if (head_x - SPEED_X >= 1) {
-            head_x -= SPEED_X;
-          } else {
-            head_x = Game.WIDTH - 2;
-          }
-          break;
-        case DIR_RIGHT:
-          if (head_x + SPEED_X + 1 < Game.WIDTH) {
-            head_x += SPEED_X;
-          } else {
-            head_x = 0;
-          }
-          break;
-        case DIR_DOWN:
-          if (head_y + SPEED_Y < Game.HEIGHT) {
-            head_y += SPEED_Y;
-          } else {
-            head_y = 0;
-          }
-          break;
+      for(int i = segments.Count; i > 1; i--){
+        Segment segment = segments.ElementAt(i - 1);
+        Segment previous_segment = segments.ElementAt(i - 2);
+
+        segment.Rotate(previous_segment.dir);
+      }
+      // for(int i = 0; i < segments.Count - 1; i++){
+      //   Segment segment = segments.ElementAt(i);
+      //   Segment next_segment = segments.ElementAt(i + 1);
+
+      //   next_segment.Rotate(segment.dir);
+      // }
+
+      Segment head = segments.ElementAt(0);
+      head.Rotate(dir);
+
+      foreach (var segment in segments) {
+        segment.Move();
       }
     }
 
     public void Draw() {
-      Console.SetCursorPosition(head_x, head_y);
-      Console.Write(BLOCK);
+      foreach (var segment in segments) {
+        segment.Draw();
+      }
     }
 
     public void Erase() {
-      Console.SetCursorPosition(head_x, head_y);
-      Console.Write("  ");
+      foreach (var segment in segments) {
+        segment.Erase();
+      }
     }
 
     public void Consume(Food food) {
       size++;
+      Segment head = segments.ElementAt(0);
+      segments.Add(new Segment(head.x, head.y, head.dir, size - 1));
       food.Redraw();
+    }
+
+    public Segment Head() {
+      return segments.ElementAt(0);
     }
   }
 }

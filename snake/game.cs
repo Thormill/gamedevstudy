@@ -47,7 +47,7 @@ namespace Snake
         player.Move();
         player.Draw();
 
-        if (player.head_x == food.x && player.head_y == food.y) player.Consume(food);
+        if (player.Head().x == food.x && player.Head().y == food.y) player.Consume(food);
 
         System.Threading.Thread.Sleep(50);
       }

@@ -1,2 +1,2 @@
 ## Compile
-mcs game.cs food.cs player.cs
+mcs game.cs food.cs player.cs segment.cs

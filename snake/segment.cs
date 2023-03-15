@@ -59,7 +59,7 @@ namespace Snake
           }
           break;
         case DIR_LEFT:
-          if (x - SPEED_X >= 1) {
+          if (x - SPEED_X >= 0) {
             x -= SPEED_X;
           } else {
             x = Game.WIDTH - 2;

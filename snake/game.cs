@@ -69,7 +69,7 @@ namespace Snake
             player.Rotate(key);
           }
 
-          if ( player.size <= SCREEN_DELAY && player.size % 10 == 0 ) {
+          if ( player.size < SCREEN_DELAY && player.size % 10 == 0 ) {
             speed = player.size ;
           }
 

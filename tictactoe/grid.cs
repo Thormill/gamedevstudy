@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace TicTacToe {
   internal class Grid {
+    public const int SIZE = 3 ;
     public Field[] grid;
     private History history;
 

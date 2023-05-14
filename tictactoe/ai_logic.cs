@@ -49,23 +49,22 @@ namespace TicTacToe {
     }
 
     private static int EvalHorizontal(Grid grid, int field_num, string figure) {
-      const int grid_size = 3; // для масштабируемости поля утащить в какую-то более глобальную область
-      int ycoord = field_num / grid_size;
+      int ycoord = field_num / Grid.SIZE;
 
       int own_count, opp_count, free_count, weight;
       own_count = opp_count = free_count = weight = 0;
 
-      for (int xcoord = 0; xcoord < grid_size; xcoord++) {
-        Field field = grid.grid[ycoord * grid_size + xcoord];
+      for (int xcoord = 0; xcoord < Grid.SIZE; xcoord++) {
+        Field field = grid.grid[ycoord * Grid.SIZE + xcoord];
 
         if (!field.busy) free_count++;
           else if (field.value == figure) own_count++;
       }
 
-      opp_count = grid_size - own_count - free_count;
+      opp_count = Grid.SIZE - own_count - free_count;
 
-      if (own_count == grid_size - 1) weight += 1000;
-      if (opp_count == grid_size - 1) weight += 500;
+      if (own_count == Grid.SIZE - 1) weight += 1000;
+      if (opp_count == Grid.SIZE - 1) weight += 500;
 
       if (opp_count == 0) {
         if (own_count > 0) weight += 2;
@@ -76,24 +75,23 @@ namespace TicTacToe {
     }
 
     private static int EvalVertical(Grid grid, int field_num,  string figure) {
-      const int grid_size = 3; // для масштабируемости поля утащить в какую-то более глобальную область
 
-      int xcoord = field_num % grid_size;
+      int xcoord = field_num % Grid.SIZE;
 
       int own_count, opp_count, free_count, weight;
       own_count = opp_count = free_count = weight = 0;
 
-      for (int ycoord = 0; ycoord < grid_size; ycoord++) {
-        Field field = grid.grid[ycoord * grid_size + xcoord];
+      for (int ycoord = 0; ycoord < Grid.SIZE; ycoord++) {
+        Field field = grid.grid[ycoord * Grid.SIZE + xcoord];
 
         if (!field.busy) free_count++;
           else if (field.value == figure) own_count++;
       }
 
-      opp_count = grid_size - own_count - free_count;
+      opp_count = Grid.SIZE - own_count - free_count;
 
-      if (own_count == grid_size - 1) weight += 1000;
-      if (opp_count == grid_size - 1) weight += 500;
+      if (own_count == Grid.SIZE - 1) weight += 1000;
+      if (opp_count == Grid.SIZE - 1) weight += 500;
 
       if (opp_count == 0) {
         if (own_count > 0) weight += 2; else weight += 1;
@@ -103,27 +101,26 @@ namespace TicTacToe {
     }
 
     private static int EvalDiagonal(Grid grid, int field_num, string figure) {
-      const int grid_size = 3; // для масштабируемости поля утащить в какую-то более глобальную область
 
-      int xcoord = field_num % grid_size;
-      int ycoord = field_num / grid_size;
+      int xcoord = field_num % Grid.SIZE;
+      int ycoord = field_num / Grid.SIZE;
 
       int own_count, opp_count, free_count, weight;
       own_count = opp_count = free_count = weight = 0;
 
       if (xcoord != ycoord) return weight;
 
-      for (int i = 0; i < grid_size; i++) {
-        Field field = grid.grid[i * grid_size + i];
+      for (int i = 0; i < Grid.SIZE; i++) {
+        Field field = grid.grid[i * Grid.SIZE + i];
 
         if (!field.busy) free_count++;
           else if (field.value == figure) own_count++;
       }
 
-      opp_count = grid_size - own_count - free_count;
+      opp_count = Grid.SIZE - own_count - free_count;
 
-      if (own_count == grid_size - 1) weight += 1000;
-      if (opp_count == grid_size - 1) weight += 500;
+      if (own_count == Grid.SIZE - 1) weight += 1000;
+      if (opp_count == Grid.SIZE - 1) weight += 500;
 
       if (opp_count == 0) {
         if (own_count > 0) weight += 2; else weight += 1;
@@ -133,27 +130,26 @@ namespace TicTacToe {
     }
 
     private static int EvalRevDiag(Grid grid, int field_num, string figure) {
-      const int grid_size = 3; // для масштабируемости поля утащить в какую-то более глобальную область
 
-      int xcoord = field_num % grid_size;
-      int ycoord = field_num / grid_size;
+      int xcoord = field_num % Grid.SIZE;
+      int ycoord = field_num / Grid.SIZE;
 
       int own_count, opp_count, free_count, weight;
       own_count = opp_count = free_count = weight = 0;
 
-      if (xcoord + ycoord + 1 != grid_size) return weight;  // ячейка принадлежит побочной диагонали, если сумма координат + 1
+      if (xcoord + ycoord + 1 != Grid.SIZE) return weight;  // ячейка принадлежит побочной диагонали, если сумма координат + 1
                                                             // равна стороне таблицы
-      for (int i = 0; i < grid_size; i++) {
-        Field field = grid.grid[i * grid_size - i];
+      for (int i = 0; i < Grid.SIZE; i++) {
+        Field field = grid.grid[i * Grid.SIZE - i];
 
         if (!field.busy) free_count++;
         else if (field.value == figure) own_count++;
       }
 
-      opp_count = grid_size - own_count - free_count;
+      opp_count = Grid.SIZE - own_count - free_count;
 
-      if (own_count == grid_size - 1) weight += 1000;
-      if (opp_count == grid_size - 1) weight += 500;
+      if (own_count == Grid.SIZE - 1) weight += 1000;
+      if (opp_count == Grid.SIZE - 1) weight += 500;
 
       if (opp_count == 0) {
         if (own_count > 0) weight += 2; else weight += 1;

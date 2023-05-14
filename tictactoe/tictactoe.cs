@@ -3,6 +3,8 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TicTacToe;
+using Tictactoe;
+using System.Dynamic;
 
 namespace TicTacToe {
   class Game {
@@ -14,6 +16,8 @@ namespace TicTacToe {
 
       Player player;
       Player bot;
+      Ai_logic ai_logic;
+      ai_logic = new Ai_logic();
 
       // Toss a coin to your witcher:
       int coin = rnd.Next(1, 100);
@@ -81,8 +85,12 @@ namespace TicTacToe {
           continue;
         } else {
           // AI turn
-          int bot_field = rnd.Next(0, free_fields.Length);
-          grid.Turn(free_fields[bot_field], bot.Draw());
+          //int bot_field = rnd.Next(0, free_fields.Length);
+          //grid.Turn(free_fields[bot_field], bot.Draw());
+          int bot_field = ai_logic.GetTargetField(grid, bot.Draw());
+          if (bot_field == -1) Console.WriteLine("Something went wrong"); //было сделано на всякий случай
+                                                                          //но вроде ни разу так и не выстрелило
+          else grid.Turn(bot_field, bot.Draw());
 
           if (bot.CheckWin(grid)) {
             grid.Draw();

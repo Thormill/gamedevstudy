@@ -9,8 +9,8 @@ using TicTacToe;
 using System.Runtime.CompilerServices;
 
 namespace TicTacToe {
-  internal class AiLogic {
-    public int GetTargetField(Grid grid1, string figure) {
+  internal static class AiLogic {
+    public static int GetTargetField(Grid grid1, string figure) {
       int target_field, curr_max_weight, curr_weight;
       target_field = curr_max_weight = curr_weight = -1;
 
@@ -30,7 +30,7 @@ namespace TicTacToe {
     // ячейки с одинаковыми весами и выбирать по рандому. Но не хотелось менять Field по принципу "не трогай чужой код, если не особо надо"
     // а делать еще что-то было лень, хотелось поскорее запустить
 
-    public int EvaluateField(Grid grid, int field_num, string figure) {
+    private static int EvaluateField(Grid grid, int field_num, string figure) {
       int field_weight = 0;
 
       if (grid.grid[field_num].busy) {
@@ -48,7 +48,7 @@ namespace TicTacToe {
       return field_weight;
     }
 
-    public int EvalHorizontal(Grid grid, int field_num, string figure) {
+    private static int EvalHorizontal(Grid grid, int field_num, string figure) {
       const int grid_size = 3; // для масштабируемости поля утащить в какую-то более глобальную область
       int ycoord = field_num / grid_size;
 
@@ -75,7 +75,7 @@ namespace TicTacToe {
       return weight;
     }
 
-    public int EvalVertical(Grid grid, int field_num,  string figure) {
+    private static int EvalVertical(Grid grid, int field_num,  string figure) {
       const int grid_size = 3; // для масштабируемости поля утащить в какую-то более глобальную область
 
       int xcoord = field_num % grid_size;
@@ -102,7 +102,7 @@ namespace TicTacToe {
       return weight;
     }
 
-    public int EvalDiagonal(Grid grid, int field_num, string figure) {
+    private static int EvalDiagonal(Grid grid, int field_num, string figure) {
       const int grid_size = 3; // для масштабируемости поля утащить в какую-то более глобальную область
 
       int xcoord = field_num % grid_size;
@@ -132,7 +132,7 @@ namespace TicTacToe {
       return weight;
     }
 
-    public int EvalRevDiag(Grid grid, int field_num, string figure) {
+    private static int EvalRevDiag(Grid grid, int field_num, string figure) {
       const int grid_size = 3; // для масштабируемости поля утащить в какую-то более глобальную область
 
       int xcoord = field_num % grid_size;
